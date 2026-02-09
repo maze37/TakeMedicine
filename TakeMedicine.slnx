@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TakeMedicine.Application/TakeMedicine.Application.csproj" />
+    <Project Path="src/TakeMedicine.Domain/TakeMedicine.Domain.csproj" />
+    <Project Path="src/TakeMedicine.Infrastructure/TakeMedicine.Infrastructure.csproj" />
+    <Project Path="src/TakeMedicine.Web/TakeMedicine.Web.csproj" />
+  </Folder>
+</Solution>
