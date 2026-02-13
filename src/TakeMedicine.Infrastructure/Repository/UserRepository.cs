@@ -31,10 +31,11 @@ public class UserRepository : IUserRepository
             .ConfigureAwait(false);
     }
 
-    public void AddAsync(User user, CancellationToken cancellationToken = default)
+    public Task AddAsync(User user, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(user);
         _context.Users.AddAsync(user, cancellationToken);
+        return Task.CompletedTask;
     }
 
     public Task DeleteAsync(User user, CancellationToken cancellationToken = default)

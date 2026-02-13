@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TakeMedicine.Application.Abstractions;
+using TakeMedicine.Infrastructure.Repository;
 
 namespace TakeMedicine.Infrastructure;
 
@@ -27,7 +28,7 @@ public static class Inject
             });
         });
 
-        services.AddScoped<IUserRepository, IUserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         
         return services;
