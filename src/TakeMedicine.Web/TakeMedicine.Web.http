@@ -1,6 +1,0 @@
-@TakeMedicine.Web_HostAddress = http://localhost:5151
-
-GET {{TakeMedicine.Web_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
