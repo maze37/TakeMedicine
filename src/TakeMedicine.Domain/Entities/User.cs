@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using CSharpFunctionalExtensions;
 using TakeMedicine.Domain.ValueObjects;
 
@@ -36,7 +33,19 @@ public class User : Entity<Guid>
         ArgumentNullException.ThrowIfNull(firstName);
         ArgumentNullException.ThrowIfNull(username);
         ArgumentNullException.ThrowIfNull(timeZone);
+        
+        var telegramIdResult = TelegramId.Create(telegramId);
+        if (telegramIdResult.IsFailure)
+            return Result.Failure<User>("Телеграм Id не может быть пустым.");
 
+        var firstNameResult = FirstName.Create(firstName);
+        if (firstNameResult.IsFailure)
+            return Result.Failure<User>("Имя не может быть пустым.");
+        
+        var usernameResult = Username.Create(username);
+        if (usernameResult.IsFailure)
+            return Result.Failure<User>("Имя пользозвателя не может быть пустым.");
+        
         var user = new User(id)
         {
             TelegramId = telegramId,
@@ -68,5 +77,4 @@ public class User : Entity<Guid>
         medicine.Deactivate();
         return Result.Success();
     }
-        
 }

@@ -6,7 +6,7 @@ namespace TakeMedicine.Domain.Entities;
 
 public class Medicine : Entity<Guid>
 {
-    public string NameOfPill { get; private set; } = string.Empty;
+    public NameOfPill NameOfPill { get; private set; } = null!;
     public DateTimeOffset StartedWhen { get; private set; }
     public DateTimeOffset FinishWhen { get; private set; }
     public Schedule Schedule { get; private set; } = null!;
@@ -16,7 +16,7 @@ public class Medicine : Entity<Guid>
 
     private Medicine(
         Guid id,
-        string name,
+        NameOfPill name,
         DateTimeOffset startedWhen,
         DateTimeOffset finishWhen,
         Schedule schedule) : base(id)
@@ -30,7 +30,7 @@ public class Medicine : Entity<Guid>
 
     public static Result<Medicine> Create(
         Guid id,
-        string name,
+        string nameOfPill,
         DateTimeOffset startedWhen,
         DateTimeOffset finishWhen,
         Schedule schedule)
@@ -38,14 +38,16 @@ public class Medicine : Entity<Guid>
         if (id == Guid.Empty)
             return Result.Failure<Medicine>("ID не может быть пустым Guid");
         
-        if (string.IsNullOrWhiteSpace(name))
-            return Result.Failure<Medicine>("Название таблетки не может быть пустым.");
+        // Валидация NameOfPill
+        var nameOfPillResult = NameOfPill.Create(nameOfPill);
+        if (nameOfPillResult.IsFailure)
+            return Result.Failure<Medicine>("Имя таблетки не может быть пустым.");
 
         if (startedWhen > finishWhen)
             return Result.Failure<Medicine>("Время начала курса таблеток не может быть раньше конца курса.");
         
         return Result.Success(
-            new Medicine(id, name, startedWhen, finishWhen, schedule));
+            new Medicine(id, nameOfPillResult.Value, startedWhen, finishWhen, schedule));
     }
     
     public void Deactivate()
