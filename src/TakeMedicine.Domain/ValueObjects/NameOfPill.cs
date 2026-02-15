@@ -6,7 +6,7 @@ public class NameOfPill : ValueObject
 {
     public string Value { get; private set; }
 
-    public NameOfPill(string value)
+    private NameOfPill(string value)
     {
         Value = value ?? throw new ArgumentNullException(nameof(value));
     }
@@ -23,4 +23,6 @@ public class NameOfPill : ValueObject
     {
         yield return Value;
     }
+
+    public static implicit operator string(NameOfPill nameOfPill) => nameOfPill.Value;
 }
